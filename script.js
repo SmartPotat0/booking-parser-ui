@@ -22,12 +22,14 @@ async function transform() {
     const date = `${day}.${months[mon]}20${year}`;
     const depCity = dict[from]?.city || from;
     const arrCity = dict[to]?.city || to;
-    const depCode = dict[from]?.tkp || from;
-    const arrCode = dict[to]?.tkp || to;
+    const depCode = from;
+    const arrCode = to;
+    const depTKP = dict[from]?.tkp || from;
+    const arrTKP = dict[to]?.tkp || to;
     const depTime = dep.slice(0,2) + ":" + dep.slice(2);
     const arrTime = arr.slice(0,2) + ":" + arr.slice(2);
 
-    output.push(`${flight} ${date}, ${depCity} ${from} (${depCode}) ${depTime} — ${arrCity} ${to} (${arrCode}) ${arrTime};`);
+    output.push(`${flight} ${date}, ${depCity} ${depTKP} (${depCode}) ${depTime} — ${arrCity} ${arrTKP} (${arrCode}) ${arrTime}`);
   }
 
   document.getElementById("output").textContent = output.join("\n");
