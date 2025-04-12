@@ -1,20 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Парсер брони (v10)</title>
+  <title>Парсер брони</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="main-layout">
-    <textarea id="input" rows="4" placeholder="Вставьте строку бронирования..."></textarea>
+    <h1>Парсер строки бронирования</h1>
+    <textarea id="input" placeholder="Вставьте строку бронирования..."></textarea>
     <button id="convert-btn">Преобразовать</button>
-    <div class="output-box">
-      <div id="output" class="output"></div>
+    <div id="output-container">
+      <div id="output" class="output-box"></div>
+      <button id="copy-btn">📋 Скопировать</button>
+      <div id="copy-status"></div>
     </div>
-    <button id="copy-btn" class="copy-btn">📋 Скопировать</button>
-    <div id="copy-status" class="copy-status"></div>
   </div>
   <script src="script.js"></script>
 </body>

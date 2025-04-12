@@ -1,62 +1,60 @@
-
 body {
-  background: linear-gradient(to right, #f0f4ff, #f0fff4);
+  background: linear-gradient(to right, #e6f0ff, #f4e6ff);
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
-  font-size: 18px;
 }
 .main-layout {
   max-width: 800px;
-  margin: 50px auto;
-  padding: 30px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin: 60px auto;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 textarea {
   width: 100%;
-  padding: 12px;
+  padding: 16px;
   font-size: 16px;
   border-radius: 10px;
   border: 1px solid #ccc;
-  margin-bottom: 12px;
+  margin: 20px 0;
+  resize: vertical;
+  font-family: monospace;
 }
 button {
-  background-color: #6C63FF;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  font-size: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
   border-radius: 10px;
+  border: none;
   cursor: pointer;
-  margin-right: 10px;
 }
-button:hover {
-  background-color: #5a54d1;
+#convert-btn {
+  background-color: #6c63ff;
+  color: white;
+}
+#convert-btn:hover {
+  background-color: #5851d3;
+}
+#copy-btn {
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: white;
 }
 .output-box {
-  margin-top: 20px;
-  background-color: #fefefe;
-  border-radius: 10px;
+  background: #f8f8f8;
   border: 1px solid #ddd;
-  padding: 20px;
-  min-height: 100px;
-}
-.output {
-  white-space: pre-wrap;
+  border-radius: 10px;
+  padding: 16px;
+  margin-top: 20px;
+  min-height: 60px;
   font-family: monospace;
+  white-space: pre-wrap;
   font-size: 16px;
 }
-.copy-btn {
-  margin-top: 20px;
-  background-color: #4caf50;
-}
-.copy-btn:hover {
-  background-color: #43a047;
-}
-.copy-status {
+#copy-status {
   font-size: 14px;
   color: #666;
-  margin-top: 6px;
+  margin-top: 10px;
 }

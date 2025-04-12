@@ -1,4 +1,3 @@
-
 let iataData = {};
 
 fetch('iata.json')
