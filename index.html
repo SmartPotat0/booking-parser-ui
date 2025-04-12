@@ -1,19 +1,19 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Парсер строки бронирования</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Парсер строки бронирования</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+<div class="container">
     <h1>Парсер строки бронирования</h1>
-    <textarea id="inputText" placeholder="Введите строку бронирования..."></textarea>
-    <button onclick="convert()">Преобразовать</button>
-    <div id="output" class="output"></div>
-    <button onclick="copyOutput()">📋 Скопировать</button>
-  </div>
-  <script src="script.js"></script>
+    <textarea id="input" placeholder="Введите строку бронирования..."></textarea>
+    <button onclick="transform()">Преобразовать</button>
+    <pre id="output"></pre>
+    <button onclick="copyToClipboard()" class="copy">📋 Скопировать</button>
+</div>
+<script type="module" src="script.js"></script>
 </body>
 </html>
