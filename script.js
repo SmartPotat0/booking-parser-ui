@@ -3,9 +3,6 @@ async function transform() {
   const response = await fetch("airports.json");
   const dict = await response.json();
 
-  const iataDict = dict.iata;
-  const tkpDict = dict.tkp;
-
   const lines = input.split("\n");
   const output = [];
 
@@ -24,14 +21,12 @@ async function transform() {
     };
 
     const date = `${day}.${months[mon]}20${year}`;
-    const fromCity = iataDict[from] || from;
-    const toCity = iataDict[to] || to;
-    const fromTKP = tkpDict[fromCity] || from;
-    const toTKP = tkpDict[toCity] || to;
+    const fromCity = dict[from] || from;
+    const toCity = dict[to] || to;
     const depTime = dep.slice(0,2) + ":" + dep.slice(2);
     const arrTime = arr.slice(0,2) + ":" + arr.slice(2);
 
-    output.push(`${flight} ${date}, ${fromCity} ${fromTKP} (${from}) ${depTime} — ${toCity} ${toTKP} (${to}) ${arrTime}`);
+    output.push(`${flight} ${date}, ${fromCity} (${from}) ${depTime} — ${toCity} (${to}) ${arrTime}`);
   }
 
   document.getElementById("output").textContent = output.join("\n");
