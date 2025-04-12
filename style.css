@@ -1,37 +1,36 @@
-
 body {
-    font-family: "Segoe UI", sans-serif;
-    background: radial-gradient(circle at top right, #f4eeff, #e3f5ff);
-    margin: 0;
-    padding: 2em;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to right, #f4f7ff, #f8efff);
+  margin: 0;
+  padding: 2em;
 }
 .container {
-    max-width: 700px;
-    background: white;
-    padding: 2em;
-    margin: auto;
-    border-radius: 1em;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  max-width: 700px;
+  background: white;
+  padding: 2em;
+  margin: auto;
+  border-radius: 1em;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 textarea, pre {
-    width: 100%;
-    font-family: monospace;
-    padding: 1em;
-    border-radius: 0.5em;
-    margin-bottom: 1em;
-    border: 1px solid #ccc;
+  width: 100%;
+  font-family: monospace;
+  padding: 1em;
+  border-radius: 0.5em;
+  margin-bottom: 1em;
+  border: 1px solid #ccc;
 }
 button {
-    display: block;
-    padding: 1em 2em;
-    background: #635bff;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 0.5em;
-    cursor: pointer;
-    margin-bottom: 1em;
+  display: block;
+  padding: 1em 2em;
+  background: #6C63FF;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  margin-bottom: 1em;
 }
 button.copy {
-    background: #4CAF50;
+  background: #4CAF50;
 }
