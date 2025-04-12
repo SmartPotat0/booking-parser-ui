@@ -1,51 +1,35 @@
-let iataData = {};
 
-fetch('iata.json')
-  .then(res => res.json())
-  .then(data => { iataData = data; });
+async function convert() {
+  const input = document.getElementById('inputText').value;
+  const response = await fetch('airports.json');
+  const dict = await response.json();
 
-function parseDate(dateStr) {
-  const months = {
-    'ЯНВ': '01', 'ФЕВ': '02', 'МАР': '03', 'АПР': '04',
-    'МАЙ': '05', 'ИЮН': '06', 'ИЮЛ': '07', 'АВГ': '08',
-    'СЕН': '09', 'ОКТ': '10', 'НОЯ': '11', 'ДЕК': '12'
-  };
-  const match = dateStr.match(/(\d{2})([А-Я]{3})(\d{2})/);
-  if (!match) return dateStr;
-  const [, day, mon, yy] = match;
-  return `${day}.${months[mon] || mon}.20${yy}`;
+  const lines = input.trim().split('\n');
+  const segments = [];
+
+  for (const line of lines) {
+    const regex = /(\w{2}-\d{3})\s+[A-ZА-Я]\s+(\d{2})([А-Я]{3})(\d{2})\s+(\w{3})(\w{3})\s+\w+\s+(\d{4})\s+(\d{4})/u;
+    const match = regex.exec(line);
+    if (!match) continue;
+
+    const [, flight, day, mon, year, from, to, dep, arr] = match;
+    const months = {
+      "ЯНВ": "01", "ФЕВ": "02", "МАР": "03", "АПР": "04", "МАЙ": "05", "ИЮН": "06",
+      "ИЮЛ": "07", "АВГ": "08", "СЕН": "09", "ОКТ": "10", "НОЯ": "11", "ДЕК": "12"
+    };
+    const date = `${day}.${months[mon]}.${20 + parseInt(year)}`;
+    const fromCity = dict[from] || from;
+    const toCity = dict[to] || to;
+    const depTime = dep.slice(0,2) + ":" + dep.slice(2);
+    const arrTime = arr.slice(0,2) + ":" + arr.slice(2);
+
+    segments.push(`${flight} ${date}, ${fromCity} ${from} ${depTime} — ${toCity} ${to} ${arrTime};`);
+  }
+
+  document.getElementById('output').innerText = segments.join('\n');
 }
 
-document.getElementById("convert-btn").onclick = () => {
-  const input = document.getElementById("input").value;
-  const lines = input.split("\n").map(line => line.trim()).filter(Boolean);
-  const output = lines.map(line => {
-    try {
-      const parts = line.split(/\s+/);
-      const flight = parts[0];
-      const date = parseDate(parts[2]);
-      const route = parts[3];
-      const depCode = route.substring(0, 3);
-      const arrCode = route.substring(3, 6);
-      const timeDep = parts[5].replace(/(\d{2})(\d{2})/, "$1:$2");
-      const timeArr = parts[6].replace(/(\d{2})(\d{2})/, "$1:$2");
-
-      const depCity = iataData[depCode]?.city_ru || depCode;
-      const arrCity = iataData[arrCode]?.city_ru || arrCode;
-
-      return `${flight} ${date}, ${depCity} ${depCode} ${timeDep} — ${arrCity} ${arrCode} ${timeArr};`;
-    } catch {
-      return "⚠️ Ошибка разбора строки.";
-    }
-  });
-  document.getElementById("output").textContent = output.join("\n");
-};
-
-document.getElementById("copy-btn").onclick = () => {
-  const output = document.getElementById("output").textContent;
-  if (!output) return;
-  navigator.clipboard.writeText(output);
-  const copyStatus = document.getElementById("copy-status");
-  copyStatus.textContent = "✓ Скопировано!";
-  setTimeout(() => (copyStatus.textContent = ""), 2000);
-};
+function copyOutput() {
+  const text = document.getElementById('output').innerText;
+  navigator.clipboard.writeText(text);
+}
