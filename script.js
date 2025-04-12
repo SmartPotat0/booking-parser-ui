@@ -30,10 +30,10 @@ document.getElementById("convert-btn").onclick = () => {
       const timeDep = parts[5].replace(/(\d{2})(\d{2})/, "$1:$2");
       const timeArr = parts[6].replace(/(\d{2})(\d{2})/, "$1:$2");
 
-      const depCity = iataData[depCode] ? iataData[depCode].city : depCode;
-      const arrCity = iataData[arrCode] ? iataData[arrCode].city : arrCode;
+      const depCity = iataData[depCode]?.city_ru || depCode;
+      const arrCity = iataData[arrCode]?.city_ru || arrCode;
 
-      return `${flight} ${date}, ${depCity} ${depCode} ${timeDep} — ${arrCity} ${arrCode} ${timeArr}`;
+      return `${flight} ${date}, ${depCity} ${depCode} ${timeDep} — ${arrCity} ${arrCode} ${timeArr};`;
     } catch {
       return "⚠️ Ошибка разбора строки.";
     }
