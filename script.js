@@ -3,6 +3,9 @@ async function transform() {
   const response = await fetch("airports.json");
   const dict = await response.json();
 
+  const iataDict = dict.iata;
+  const tkpDict = dict.tkp;
+
   const lines = input.split("\n");
   const output = [];
 
@@ -19,17 +22,16 @@ async function transform() {
       "МАЙ": "05", "ИЮН": "06", "ИЮЛ": "07", "АВГ": "08",
       "СЕН": "09", "ОКТ": "10", "НОЯ": "11", "ДЕК": "12"
     };
+
     const date = `${day}.${months[mon]}20${year}`;
-    const depCity = dict[from]?.city || from;
-    const arrCity = dict[to]?.city || to;
-    const depCode = from;
-    const arrCode = to;
-    const depTKP = dict[from]?.tkp || from;
-    const arrTKP = dict[to]?.tkp || to;
+    const fromCity = iataDict[from] || from;
+    const toCity = iataDict[to] || to;
+    const fromTKP = tkpDict[fromCity] || from;
+    const toTKP = tkpDict[toCity] || to;
     const depTime = dep.slice(0,2) + ":" + dep.slice(2);
     const arrTime = arr.slice(0,2) + ":" + arr.slice(2);
 
-    output.push(`${flight} ${date}, ${depCity} ${depTKP} (${depCode}) ${depTime} — ${arrCity} ${arrTKP} (${arrCode}) ${arrTime}`);
+    output.push(`${flight} ${date}, ${fromCity} ${fromTKP} (${from}) ${depTime} — ${toCity} ${toTKP} (${to}) ${arrTime}`);
   }
 
   document.getElementById("output").textContent = output.join("\n");
