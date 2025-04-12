@@ -7,8 +7,11 @@ async function transform() {
   const output = [];
 
   for (const line of lines) {
-    const match = line.match(/([A-Z0-9\-]+)\s+[A-ZА-Я]\s+(\d{2})([А-Я]{3})(\d{2})\s+([А-Я]{3})([А-Я]{3})\s+\S+\s+(\d{4})\s+(\d{4})/u);
-    if (!match) continue;
+    const match = line.match(/([A-ZА-Я0-9\-]+)\s+[A-ZА-Я]\s+(\d{2})([А-Я]{3})(\d{2})\s+([А-Я]{3})([А-Я]{3})\s+\S+\s+(\d{4})\s+(\d{4})/u);
+    if (!match) {
+      output.push("⚠️ Не удалось разобрать: " + line);
+      continue;
+    }
 
     const [_, flight, day, mon, year, from, to, dep, arr] = match;
     const months = {
@@ -17,12 +20,14 @@ async function transform() {
       "СЕН": "09", "ОКТ": "10", "НОЯ": "11", "ДЕК": "12"
     };
     const date = `${day}.${months[mon]}20${year}`;
-    const fromCity = dict[from] || from;
-    const toCity = dict[to] || to;
+    const depCity = dict[from]?.city || from;
+    const arrCity = dict[to]?.city || to;
+    const depCode = dict[from]?.tkp || from;
+    const arrCode = dict[to]?.tkp || to;
     const depTime = dep.slice(0,2) + ":" + dep.slice(2);
     const arrTime = arr.slice(0,2) + ":" + arr.slice(2);
 
-    output.push(`${flight} ${date}, ${fromCity} ${from} ${depTime} — ${toCity} ${to} ${arrTime};`);
+    output.push(`${flight} ${date}, ${depCity} ${from} (${depCode}) ${depTime} — ${arrCity} ${to} (${arrCode}) ${arrTime};`);
   }
 
   document.getElementById("output").textContent = output.join("\n");

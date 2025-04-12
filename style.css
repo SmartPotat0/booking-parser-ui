@@ -1,6 +1,6 @@
 body {
   font-family: "Segoe UI", sans-serif;
-  background: linear-gradient(to right, #f4f7ff, #f8efff);
+  background: linear-gradient(to right, #f3f4fe, #edeaff);
   margin: 0;
   padding: 2em;
 }
@@ -23,7 +23,7 @@ textarea, pre {
 button {
   display: block;
   padding: 1em 2em;
-  background: #6C63FF;
+  background: #635bff;
   color: white;
   font-weight: bold;
   border: none;
