@@ -1,11 +1,11 @@
 body {
   font-family: "Segoe UI", sans-serif;
-  background: #f2f3f9;
+  background: #f3f4f9;
   margin: 0;
   padding: 2em;
 }
 .container {
-  max-width: 700px;
+  max-width: 720px;
   background: white;
   padding: 2em;
   margin: auto;
@@ -23,7 +23,7 @@ textarea, pre {
 button {
   display: block;
   padding: 1em 2em;
-  background: #6a5acd;
+  background: #645eff;
   color: white;
   font-weight: bold;
   border: none;
