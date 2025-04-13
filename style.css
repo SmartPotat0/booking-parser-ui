@@ -1,14 +1,14 @@
 body {
-  font-family: "Segoe UI", sans-serif;
-  background: #f3f4f9;
+  font-family: sans-serif;
+  background: #f5f6fa;
   margin: 0;
   padding: 2em;
 }
 .container {
-  max-width: 720px;
-  background: white;
-  padding: 2em;
+  max-width: 700px;
   margin: auto;
+  padding: 2em;
+  background: white;
   border-radius: 1em;
   box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
@@ -16,21 +16,18 @@ textarea, pre {
   width: 100%;
   font-family: monospace;
   padding: 1em;
+  border: 1px solid #ccc;
   border-radius: 0.5em;
   margin-bottom: 1em;
-  border: 1px solid #ccc;
 }
 button {
-  display: block;
   padding: 1em 2em;
-  background: #645eff;
-  color: white;
   font-weight: bold;
   border: none;
   border-radius: 0.5em;
   cursor: pointer;
-  margin-bottom: 1em;
 }
 button.copy {
   background: #4CAF50;
+  color: white;
 }
