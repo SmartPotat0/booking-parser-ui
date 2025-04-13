@@ -1,75 +1,47 @@
-let iataDict = {};
-let tkpDict = {};
-let statusDict = {};
+let iata = {}, tkp = {}, statuses = {};
 
 async function loadData() {
-  iataDict = await fetch("iata.json").then(r => r.json());
-  tkpDict = await fetch("tkp.json").then(r => r.json());
-  statusDict = await fetch("statuses.json").then(r => r.json());
+  iata = await fetch("iata.json").then(r => r.json());
+  tkp = await fetch("tkp.json").then(r => r.json());
+  statuses = await fetch("statuses.json").then(r => r.json());
 }
 
-function getCity(code) {
-  return iataDict[code] || tkpDict[code] || code;
+function resolveCity(code) {
+  return iata[code] || tkp[code] || code;
 }
 
-function getStatus(code) {
-  return statusDict[code] || "";
+function resolveStatus(code) {
+  return statuses[code] || "";
 }
 
-function formatTime(time) {
-  return time.slice(0,2) + ":" + time.slice(2);
+function convertBooking() {
+  const input = document.getElementById("input-booking").value.trim();
+  const codes = input.match(/[A-ZА-ЯЁ]{3}/g) || [];
+  const resolved = codes.map(code => resolveCity(code));
+  document.getElementById("output-booking").textContent = resolved.join(" → ");
 }
 
-function parseLine(line) {
-  const months = {
-    "ЯНВ": "01", "ФЕВ": "02", "МАР": "03", "АПР": "04",
-    "МАЙ": "05", "ИЮН": "06", "ИЮЛ": "07", "АВГ": "08",
-    "СЕН": "09", "ОКТ": "10", "НОЯ": "11", "ДЕК": "12"
-  };
-
-  const regexes = [
-    /([A-ZА-Я]{2})[- ]?(\d{3,4})\s+[A-ZА-Я]\s+(\d{2})([А-Я]{3})(\d{2})\s+([A-ZА-Я]{3})\s+([A-ZА-Я]{3})\s+([A-ZА-Я0-9]{2,4})\s+(\d{4})\s+(\d{4})/,
-    /([A-ZА-Я0-9-]{5,7})\s+[A-ZА-Я]\s+(\d{2})([А-Я]{3})(\d{2})\s+([А-ZА-Я]{6})\s+([A-ZА-Я0-9]{2,4})\s+(\d{4})\s+(\d{4})/
-  ];
-
-  for (const r of regexes) {
-    const m = line.match(r);
-    if (m) {
-      if (m.length === 11) {
-        const [_, air, num, day, mon, yy, from, to, status, dep, arr] = m;
-        const code = air + "-" + num;
-        const date = `${day}.${months[mon]}20${yy}`;
-        const fromCity = getCity(from);
-        const toCity = getCity(to);
-        const statusText = getStatus(status);
-        let result = `${code} ${date}, ${fromCity} ${formatTime(dep)} — ${toCity} ${formatTime(arr)}`;
-        if (statusText) result += ` — ${statusText}`;
-        return result;
-      } else if (m.length === 9) {
-        const [_, code, day, mon, yy, both, status, dep, arr] = m;
-        const from = both.slice(0, 3);
-        const to = both.slice(3, 6);
-        const date = `${day}.${months[mon]}20${yy}`;
-        const fromCity = getCity(from);
-        const toCity = getCity(to);
-        const statusText = getStatus(status);
-        let result = `${code} ${date}, ${fromCity} ${formatTime(dep)} — ${toCity} ${formatTime(arr)}`;
-        if (statusText) result += ` — ${statusText}`;
-        return result;
-      }
+function convertSystem() {
+  const input = document.getElementById("input-system").value.trim();
+  const parts = input.split("\n").map(line => {
+    const codes = line.match(/[A-ZА-ЯЁ]{6}|[A-ZА-ЯЁ]{3}\s+[A-ZА-ЯЁ]{3}/g);
+    let from = "", to = "";
+    if (codes && codes[0]) {
+      const clean = codes[0].replace(/\s+/g, "");
+      from = clean.slice(0, 3);
+      to = clean.slice(3, 6);
     }
-  }
-  return "⚠️ Не удалось распознать: " + line;
+    const time = line.match(/\d{4}\s+\d{4}/g);
+    const stat = Object.keys(statuses).find(s => line.includes(s));
+    let result = `${resolveCity(from)} — ${resolveCity(to)}`;
+    if (time) result += " " + time[0].replace(/(\d{2})(\d{2})/, "$1:$2");
+    if (stat) result += " — " + resolveStatus(stat);
+    return result;
+  });
+  document.getElementById("output-system").textContent = parts.join("\n");
 }
 
-async function transform() {
-  await loadData();
-  const input = document.getElementById("input").value.trim();
-  const lines = input.split("\n");
-  const output = lines.map(parseLine);
-  document.getElementById("output").textContent = output.join("\n");
-}
-
-function copyToClipboard() {
-  navigator.clipboard.writeText(document.getElementById("output").textContent);
+function copyResult(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text);
 }

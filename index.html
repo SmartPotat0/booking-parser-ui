@@ -2,17 +2,26 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Парсер строки бронирования</title>
+  <title>Локальный парсер</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<div class="container">
-  <h1>Парсер строки бронирования</h1>
-  <textarea id="input" placeholder="Вставьте строку..."></textarea>
-  <button onclick="transform()">Преобразовать</button>
-  <pre id="output"></pre>
-  <button onclick="copyToClipboard()" class="copy">📋 Скопировать</button>
-</div>
+  <div class="dual-container">
+    <div class="block">
+      <h2>Бронирования</h2>
+      <textarea id="input-booking" placeholder="Введите строку бронирования..."></textarea>
+      <button onclick="convertBooking()">Конвертировать</button>
+      <pre id="output-booking"></pre>
+      <button onclick="copyResult('output-booking')">📋 Скопировать</button>
+    </div>
+    <div class="block">
+      <h2>Системные</h2>
+      <textarea id="input-system" placeholder="Введите системное сообщение..."></textarea>
+      <button onclick="convertSystem()">Конвертировать</button>
+      <pre id="output-system"></pre>
+      <button onclick="copyResult('output-system')">📋 Скопировать</button>
+    </div>
+  </div>
 <script src="script.js"></script>
 </body>
 </html>
