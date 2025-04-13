@@ -1,0 +1,38 @@
+body {
+  font-family: sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 2em;
+}
+.dual-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2em;
+  max-width: 1200px;
+  margin: auto;
+}
+.block {
+  flex: 1;
+  background: white;
+  padding: 2em;
+  border-radius: 1em;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+textarea, pre {
+  width: 100%;
+  font-family: monospace;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+  border: 1px solid #ccc;
+}
+button {
+  padding: 1em 2em;
+  font-weight: bold;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  margin-bottom: 1em;
+  background: #635bff;
+  color: white;
+}
