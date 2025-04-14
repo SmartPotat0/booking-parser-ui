@@ -9,9 +9,21 @@ const MONTHS = {
 // Хранилище справочников (загружаются один раз)
 let airportCodes = {};
 
-fetch('airport_codes.json')
+fetch('airport_codes_rebuilt.json')
   .then(res => res.json())
   .then(data => airportCodes = data);
+
+function findAirportByCode(code) {
+  // 1. Поиск по коду РФ (ключ словаря)
+  if (airportCodes[code]) return airportCodes[code];
+
+  // 2. Поиск по IATA внутри значений
+  const match = Object.values(airportCodes).find(entry => entry.iata === code);
+  if (match) return match;
+
+  // 3. Фолбэк
+  return { city: code, iata: '' };
+}
 
 function convertBooking() {
   const input = document.getElementById('bookingInput').value.trim();
@@ -29,7 +41,7 @@ function convertBooking() {
       flightNumber = flightRaw;
     } else if (/^[A-ZА-Я]{2}$/.test(flightRaw) && /^\d{3,4}$/.test(tokens[1])) {
       flightNumber = flightRaw + '-' + tokens[1];
-      tokens.splice(1, 1); // удалим номер из массива
+      tokens.splice(1, 1);
     } else {
       throw new Error('Не удалось определить номер рейса');
     }
@@ -41,12 +53,13 @@ function convertBooking() {
     const year = '20' + dateToken.slice(5);
     const formattedDate = `${day}.${MONTHS[mon]}.${year}`;
 
-    // Определение кодов аэропортов (3 или 4 элемент)
-    const rawCodes = tokens[3].length > 6 ? tokens[3].match(/.{1,3}/g) : tokens[3].split(/(?<=\G.{3})/);
-    const [depCode, arrCode] = rawCodes;
+    // Определение кодов аэропортов
+    const codeToken = tokens[3];
+    const codes = codeToken.length > 6 ? codeToken.match(/.{1,3}/g) : codeToken.split(/(?<=\G.{3})/);
+    const [depCode, arrCode] = codes;
 
-    const depData = airportCodes[depCode] || { city: depCode, iata: '' };
-    const arrData = airportCodes[arrCode] || { city: arrCode, iata: '' };
+    const depData = findAirportByCode(depCode);
+    const arrData = findAirportByCode(arrCode);
 
     // Время
     const timeFrom = tokens[tokens.length - 2];
