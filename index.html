@@ -80,7 +80,7 @@
       <h2>Системные</h2>
       <textarea id="systemInput" placeholder="Введите сообщение..."></textarea>
       <div class="buttons">
-        <button class="convert" onclick="convertSystem()">Конвертировать</button>
+        <button class="convert">Конвертировать</button>
       </div>
       <div class="output-area">
         <textarea id="systemResult" readonly placeholder="Результат..."></textarea>
@@ -89,17 +89,8 @@
     </div>
   </div>
 
+  <script src="parser.js"></script>
   <script>
-    function convertBooking() {
-      const input = document.getElementById('bookingInput').value.trim();
-      document.getElementById('bookingResult').value = '[результат будет тут]\n' + input;
-    }
-
-    function convertSystem() {
-      const input = document.getElementById('systemInput').value.trim();
-      document.getElementById('systemResult').value = '[результат будет тут]\n' + input;
-    }
-
     function copyResult(id) {
       const textarea = document.getElementById(id);
       textarea.select();
