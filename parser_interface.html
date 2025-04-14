@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Парсер бронирований</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 p-6">
+  <div class="flex flex-wrap gap-6 justify-center">
+    <!-- Бронирования -->
+    <div class="bg-white shadow rounded-xl p-4 w-full max-w-2xl">
+      <h2 class="text-lg font-semibold mb-2">Бронирования</h2>
+      <textarea id="booking-input" rows="4" placeholder="Введите строку..." class="w-full p-2 border border-gray-300 rounded-md mb-2"></textarea>
+      <button onclick="convertBooking()" class="bg-blue-600 text-white px-4 py-2 rounded-md mb-2">Конвертировать</button>
+      <textarea id="booking-output" rows="4" readonly class="w-full p-2 border border-gray-300 rounded-md mb-2" placeholder="Результат..."></textarea>
+      <button onclick="copyToClipboard('booking-output')" class="bg-green-600 text-white px-4 py-2 rounded-md">Скопировать</button>
+    </div>
+
+    <!-- Системные -->
+    <div class="bg-white shadow rounded-xl p-4 w-full max-w-2xl">
+      <h2 class="text-lg font-semibold mb-2">Системные</h2>
+      <textarea id="system-input" rows="4" placeholder="Введите сообщение..." class="w-full p-2 border border-gray-300 rounded-md mb-2"></textarea>
+      <button onclick="convertSystem()" class="bg-blue-600 text-white px-4 py-2 rounded-md mb-2">Конвертировать</button>
+      <textarea id="system-output" rows="4" readonly class="w-full p-2 border border-gray-300 rounded-md mb-2" placeholder="Результат..."></textarea>
+      <button onclick="copyToClipboard('system-output')" class="bg-green-600 text-white px-4 py-2 rounded-md">Скопировать</button>
+    </div>
+  </div>
+
+  <script>
+    function convertBooking() {
+      const input = document.getElementById('booking-input').value;
+      document.getElementById('booking-output').value = '[Тут будет результат парсинга бронирования]';
+    }
+
+    function convertSystem() {
+      const input = document.getElementById('system-input').value;
+      document.getElementById('system-output').value = '[Тут будет результат парсинга системного сообщения]';
+    }
+
+    function copyToClipboard(id) {
+      const textArea = document.getElementById(id);
+      textArea.select();
+      document.execCommand('copy');
+    }
+  </script>
+</body>
+</html>
